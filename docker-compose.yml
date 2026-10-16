@@ -1,0 +1,22 @@
+services:
+  api:
+    build: .
+    container_name: intranet_rrhh_api
+    restart: unless-stopped
+    expose:
+      - "8205"
+    env_file:
+      - .env
+    volumes:
+      - /home/ec2-user/.aws:/root/.aws:ro
+    networks:
+      - intranet_api_keycloak_network
+      - intranet_gestion_auth_network
+    external_links:
+      - mysql-db-api-keycloak:mysql-db-api-keycloak
+
+networks:
+  intranet_api_keycloak_network:
+    external: true
+  intranet_gestion_auth_network:
+    external: true

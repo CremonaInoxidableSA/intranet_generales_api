@@ -1,9 +1,4 @@
-from fastapi import (
-    APIRouter,
-    HTTPException,
-    Depends,
-    Query,
-)
+from fastapi import (APIRouter, HTTPException, Depends, Query)
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from security.permissions import require_role
@@ -20,7 +15,7 @@ security_scheme = HTTPBearer()
 
 
 @router.get(
-    "/listar",
+    "/lista",
     dependencies=[
         Depends(require_role("PERMISO_VER_TICKETS_RENDICIONES")),
         Depends(get_current_user)

@@ -51,6 +51,8 @@ from routers.viaticos.listaviaje import router as viaticos_listaviaje_router
 
 from routers.tickets.cargar import router as tickets_cargar_router
 from routers.tickets.lista import router as tickets_lista_router
+from routers.tickets.imagen import router as tickets_imagen_router
+from routers.tickets.detalles import router as tickets_detalles_router
 
 load_dotenv()
     
@@ -108,3 +110,5 @@ app.include_router(viaticos_listaviaje_router)
 
 app.include_router(tickets_cargar_router)
 app.include_router(tickets_lista_router)
+app.include_router(tickets_imagen_router)
+app.include_router(tickets_detalles_router)

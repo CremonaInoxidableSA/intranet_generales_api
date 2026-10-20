@@ -2,6 +2,9 @@ from sqlalchemy import desc
 from config.db import SessionLocal
 from models.ticket_usuario import TicketUsuario
 from models.viaje_usuario import ViajeUsuario
+from models.monedas import Monedas
+from models.conceptos import Conceptos
+from models.medios_pago import MediosPago
 
 
 async def listar_tickets_service(id_viaje_usuario: int):
@@ -38,32 +41,10 @@ async def listar_tickets_service(id_viaje_usuario: int):
             ticket_info = {
                 "id_ticket": ticket.id_ticket,
                 "nombre_imagen": ticket.nombre_imagen,
-                "url_imagen": f"http://localhost:8205/imagenes/tickets/{ticket.nombre_imagen}",
-                "fecha_carga": ticket.fecha_carga,
-                "fecha_gasto": ticket.fecha_gasto,
                 "monto": ticket.monto,
-                "estado_ticket_usuario": ticket.estado_ticket_usuario,
-                "estado_ticket_admin": ticket.estado_ticket_admin,
+                "id_moneda": ticket.id_moneda,
+                "estado_ticket_usuario": ticket.estado_ticket_usuario
             }
-            
-            if ticket.medio_pago:
-                ticket_info["medio_pago"] = {
-                    "id": ticket.medio_pago.id_medio_pago,
-                    "nombre": ticket.medio_pago.nombre_medio_pago
-                }
-            
-            if ticket.moneda:
-                ticket_info["moneda"] = {
-                    "id": ticket.moneda.id_moneda,
-                    "nombre": ticket.moneda.nombre_moneda,
-                    "simbolo": ticket.moneda.simbolo
-                }
-            
-            if ticket.concepto:
-                ticket_info["concepto"] = {
-                    "id": ticket.concepto.id_concepto,
-                    "nombre": ticket.concepto.nombre_concepto
-                }
             
             tickets_data.append(ticket_info)
         

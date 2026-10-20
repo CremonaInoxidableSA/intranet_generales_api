@@ -1,13 +1,6 @@
 from typing import Annotated
 
-from fastapi import (
-    APIRouter,
-    HTTPException,
-    Depends,
-    UploadFile,
-    File,
-    Query,
-)
+from fastapi import (APIRouter, HTTPException, Depends, UploadFile, File, Query)
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from security.permissions import require_role
@@ -33,11 +26,13 @@ security_scheme = HTTPBearer()
 async def cargar_tickets(
     archivos: list[UploadFile],
     id_viaje_usuario: int = Query(..., description="ID del viaje usuario"),
+    current_user: AuthenticatedUser = Depends(get_current_user),
     credentials: HTTPAuthorizationCredentials = Depends(security_scheme),
 ):
     result = await cargar_tickets_service(
         id_viaje_usuario=id_viaje_usuario,
         archivos=archivos,
+        id_usuario_jwt=current_user.id,
     )
 
     if not result["success"]:

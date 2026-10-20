@@ -29,9 +29,9 @@ def obtener_nombre_unico(nombre_original: str) -> str:
     return f"{nombre_base}({contador}){extension}"
 
 
-async def cargar_tickets_service(id_viaje_usuario: int, archivos: list[UploadFile]):
+async def cargar_tickets_service(id_viaje_usuario: int, archivos: list[UploadFile], id_usuario_jwt: str):
     """
-    Crea registros en ticket_usuario.
+    Crea registros en ticket_usuario con validaciones de propiedad y estado.
     """
     db = SessionLocal()
     try:
@@ -41,11 +41,6 @@ async def cargar_tickets_service(id_viaje_usuario: int, archivos: list[UploadFil
                 "detail": "No se pueden cargar más de 30 imágenes a la vez."
             }
         
-        viaje_usuario = db.query(ViajeUsuario).filter(
-            ViajeUsuario.id_viaje_usuario == id_viaje_usuario,
-            ViajeUsuario.estado == True
-        ).first()
-
         if len(archivos) < 1:
             return {
                 "success": False,
@@ -53,14 +48,31 @@ async def cargar_tickets_service(id_viaje_usuario: int, archivos: list[UploadFil
             }
         
         viaje_usuario = db.query(ViajeUsuario).filter(
-            ViajeUsuario.id_viaje_usuario == id_viaje_usuario,
-            ViajeUsuario.estado == True
+            ViajeUsuario.id_viaje_usuario == id_viaje_usuario
         ).first()
         
         if not viaje_usuario:
             return {
                 "success": False,
-                "detail": "El viaje_usuario especificado no existe o no está activo."
+                "detail": "El viaje_usuario especificado no existe."
+            }
+        
+        if not viaje_usuario.estado:
+            return {
+                "success": False,
+                "detail": "El viaje_usuario no está activo."
+            }
+        
+        if viaje_usuario.id_usuario_viajante != id_usuario_jwt:
+            return {
+                "success": False,
+                "detail": "No tienes permiso para cargar tickets en este viaje."
+            }
+        
+        if not viaje_usuario.viaje.estado:
+            return {
+                "success": False,
+                "detail": "El viaje asociado no está activo."
             }
         
         tickets_creados = []
@@ -69,7 +81,7 @@ async def cargar_tickets_service(id_viaje_usuario: int, archivos: list[UploadFil
         for archivo in archivos:
             extension = os.path.splitext(archivo.filename)[1].lower()
             if extension not in ALLOWED_EXTENSIONS:
-                errores.append(f"{archivo.filename}: Formato no permitido. Solo se aceptan PNG, JPEG, JPG")
+                errores.append(f"El archivo '{archivo.filename}' no se cargó, recorda que solo se aceptan archivos de formato PNG, JPEG, JPG")
                 continue
             
             try:
@@ -84,7 +96,8 @@ async def cargar_tickets_service(id_viaje_usuario: int, archivos: list[UploadFil
                     id_viaje_usuario=id_viaje_usuario,
                     fecha_carga=datetime.now(),
                     nombre_imagen=nombre_unico,
-                    estado_ticket_usuario="PENDIENTE"
+                    estado_ticket_usuario="PENDIENTE",
+                    id_moneda=viaje_usuario.viaje.id_moneda
                 )
                 
                 db.add(ticket)
@@ -99,8 +112,7 @@ async def cargar_tickets_service(id_viaje_usuario: int, archivos: list[UploadFil
         
         respuesta = {
             "success": True,
-            "detail": f"Se cargaron {len(tickets_creados)} imagen(es) correctamente.",
-            "tickets_creados": tickets_creados
+            "detail": f"Se cargaron {len(tickets_creados)} ticket(s) correctamente.",
         }
         
         if errores:

@@ -24,6 +24,7 @@ def listar_viaticos_por_viaje_service(id_viaje_usuario: int):
         viaticos_list = [
             {
                 "id_viatico": viatico.id_viatico,
+                "id_moneda": viatico.id_moneda,
                 "moneda": viatico.moneda.nombre,
                 "monto_entregado": viatico.monto_entregado,
                 "monto_devuelto": viatico.monto_devuelto,

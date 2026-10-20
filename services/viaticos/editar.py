@@ -32,6 +32,12 @@ def editar_viaticos_service(
                 "detail": "El viatico especificado no existe."
             }
         
+        if viatico.estado == True:
+            return {
+                "success": False,
+                "detail": "El viatico ya está aprobado y no puede modificarse."
+            }
+        
         viaje_usuario = viatico.viaje_usuario
         
         if viaje_usuario.id_usuario_viajante != id_usuario_viajante:

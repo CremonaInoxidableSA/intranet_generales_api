@@ -49,6 +49,9 @@ from routers.viaticos.editar import router as viaticos_editar_router
 from routers.viaticos.aprobar import router as viaticos_aprobar_router
 from routers.viaticos.listaviaje import router as viaticos_listaviaje_router
 
+from routers.tickets.cargar import router as tickets_cargar_router
+from routers.tickets.lista import router as tickets_lista_router
+
 load_dotenv()
     
 with create_engine(
@@ -102,3 +105,6 @@ app.include_router(viaticos_crear_router)
 app.include_router(viaticos_editar_router)
 app.include_router(viaticos_aprobar_router)
 app.include_router(viaticos_listaviaje_router)
+
+app.include_router(tickets_cargar_router)
+app.include_router(tickets_lista_router)

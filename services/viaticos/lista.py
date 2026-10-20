@@ -3,7 +3,7 @@ from models.viajes import Viajes
 from sqlalchemy.exc import SQLAlchemyError
 
 
-def listar_viajes_service():
+def listar_viaticos_service():
     """
     Obtiene la lista de todos los viajes activos de la base de datos.
     """

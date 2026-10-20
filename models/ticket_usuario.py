@@ -14,8 +14,7 @@ class TicketUsuario(Base):
     id_medio_pago = Column(Integer, ForeignKey("medios_pago.id_medio_pago"), nullable=True)
     id_moneda = Column(Integer, ForeignKey("monedas.id_moneda"), nullable=True)
     id_concepto = Column(Integer, ForeignKey("conceptos.id_concepto"), nullable=True)
-    estado_ticket_usuario = Column(String(255), nullable=False)
-    estado_ticket_admin = Column(String(255), nullable=True)
+    estado = Column(String(255), nullable=False)
     
     viaje_usuario = relationship("ViajeUsuario", back_populates="tickets")
     medio_pago = relationship("MediosPago", back_populates="tickets")

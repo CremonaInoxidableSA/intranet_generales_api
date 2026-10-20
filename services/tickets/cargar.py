@@ -10,7 +10,7 @@ UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "../../imagenes/tickets")
 
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-ALLOWED_EXTENSIONS = {".png", ".jpg", ".jpeg"}
+ALLOWED_EXTENSIONS = {".png", ".jpg", ".jpeg", ".pdf"}
 
 
 def obtener_nombre_unico(nombre_original: str) -> str:
@@ -81,7 +81,7 @@ async def cargar_tickets_service(id_viaje_usuario: int, archivos: list[UploadFil
         for archivo in archivos:
             extension = os.path.splitext(archivo.filename)[1].lower()
             if extension not in ALLOWED_EXTENSIONS:
-                errores.append(f"El archivo '{archivo.filename}' no se cargó, recorda que solo se aceptan archivos de formato PNG, JPEG, JPG")
+                errores.append(f"El archivo '{archivo.filename}' no se cargó, recorda que solo se aceptan archivos de formato PNG, JPEG, JPG, PDF")
                 continue
             
             try:
@@ -96,7 +96,7 @@ async def cargar_tickets_service(id_viaje_usuario: int, archivos: list[UploadFil
                     id_viaje_usuario=id_viaje_usuario,
                     fecha_carga=datetime.now(),
                     nombre_imagen=nombre_unico,
-                    estado_ticket_usuario="PENDIENTE",
+                    estado="PENDIENTE",
                     id_moneda=viaje_usuario.viaje.id_moneda
                 )
                 

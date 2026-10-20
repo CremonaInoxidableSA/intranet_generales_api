@@ -43,7 +43,7 @@ async def listar_tickets_service(id_viaje_usuario: int):
                 "nombre_imagen": ticket.nombre_imagen,
                 "monto": ticket.monto,
                 "id_moneda": ticket.id_moneda,
-                "estado_ticket_usuario": ticket.estado_ticket_usuario
+                "estado": ticket.estado
             }
             
             tickets_data.append(ticket_info)

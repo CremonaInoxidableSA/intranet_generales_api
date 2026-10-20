@@ -58,8 +58,7 @@ async def obtener_detalles_ticket_service(id_ticket: int, id_usuario_jwt: str, p
             "id_medio_pago": ticket.id_medio_pago,
             "id_moneda": ticket.id_moneda,
             "id_concepto": ticket.id_concepto,
-            "estado_ticket_usuario": ticket.estado_ticket_usuario,
-            "estado_ticket_admin": ticket.estado_ticket_admin,
+            "estado": ticket.estado
         }
         
         if ticket.medio_pago:

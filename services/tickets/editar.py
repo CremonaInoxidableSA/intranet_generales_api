@@ -125,15 +125,15 @@ async def editar_ticket_service(
                     "detail": "Nombre de archivo inválido."
                 }
             
-            # Validar que la extensión sea la misma
-            _, ext_antigua = os.path.splitext(ticket.nombre_imagen)
-            _, ext_nueva = os.path.splitext(nombre_imagen)
+            # Extraer extensión antigua y aplicarla al nuevo nombre
+            nombre_sin_ext, ext_antigua = os.path.splitext(ticket.nombre_imagen)
+            nombre_nuevo_sin_ext, ext_nueva = os.path.splitext(nombre_imagen)
             
-            if ext_antigua.lower() != ext_nueva.lower():
-                return {
-                    "success": False,
-                    "detail": f"La extensión debe ser {ext_antigua}, no {ext_nueva}."
-                }
+            # Si el nuevo nombre no tiene extensión o tiene una diferente, usar la extensión antigua
+            if not ext_nueva:
+                nombre_imagen = nombre_nuevo_sin_ext + ext_antigua
+            else:
+                nombre_imagen = nombre_nuevo_sin_ext + ext_antigua
             
             ruta_antigua = os.path.join(UPLOAD_DIR, ticket.nombre_imagen)
             ruta_nueva = os.path.join(UPLOAD_DIR, nombre_imagen)

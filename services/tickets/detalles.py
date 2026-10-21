@@ -53,7 +53,7 @@ async def obtener_detalles_ticket_service(id_ticket: int, id_usuario_jwt: str, p
         ticket_info = {
             "id_ticket": ticket.id_ticket,
             "nombre_imagen": ticket.nombre_imagen,
-            "fecha_gasto": ticket.fecha_gasto,
+            "fecha_gasto": ticket.fecha_gasto.date(),
             "monto": ticket.monto,
             "id_medio_pago": ticket.id_medio_pago,
             "id_moneda": ticket.id_moneda,
@@ -62,7 +62,7 @@ async def obtener_detalles_ticket_service(id_ticket: int, id_usuario_jwt: str, p
         }
         
         if ticket.medio_pago:
-            ticket_info["nombre_medio_pago"] = ticket.medio_pago.nombre_medio_pago
+            ticket_info["nombre_medio_pago"] = ticket.medio_pago.nombre
         else:
             ticket_info["nombre_medio_pago"] = None
         
@@ -72,7 +72,7 @@ async def obtener_detalles_ticket_service(id_ticket: int, id_usuario_jwt: str, p
             ticket_info["nombre_moneda"] = None
         
         if ticket.concepto:
-            ticket_info["nombre_concepto"] = ticket.concepto.nombre_concepto
+            ticket_info["nombre_concepto"] = ticket.concepto.nombre
         else:
             ticket_info["nombre_concepto"] = None
         

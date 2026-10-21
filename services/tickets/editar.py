@@ -173,7 +173,7 @@ async def editar_ticket_service(
                 "id_ticket": ticket.id_ticket,
                 "nombre_imagen": ticket.nombre_imagen,
                 "monto": ticket.monto,
-                "fecha_gasto": ticket.fecha_gasto,
+                "fecha_gasto": ticket.fecha_gasto.date() if ticket.fecha_gasto else None,
                 "id_medio_pago": ticket.id_medio_pago,
                 "id_moneda": ticket.id_moneda,
                 "id_concepto": ticket.id_concepto,

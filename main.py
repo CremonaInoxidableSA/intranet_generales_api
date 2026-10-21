@@ -55,6 +55,7 @@ from routers.tickets.imagen import router as tickets_imagen_router
 from routers.tickets.detalles import router as tickets_detalles_router
 from routers.tickets.editar import router as tickets_editar_router
 from routers.tickets.aprobar import router as tickets_aprobar_router
+from routers.tickets.eliminar import router as tickets_eliminar_router
 
 load_dotenv()
     
@@ -116,3 +117,4 @@ app.include_router(tickets_imagen_router)
 app.include_router(tickets_detalles_router)
 app.include_router(tickets_editar_router)
 app.include_router(tickets_aprobar_router)
+app.include_router(tickets_eliminar_router)

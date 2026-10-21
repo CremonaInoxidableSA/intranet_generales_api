@@ -17,3 +17,6 @@ class EditarTicketRequest(BaseModel):
 
 class AprobarTicketRequest(BaseModel):
     id_ticket: int
+
+class EliminarTicketRequest(BaseModel):
+    id_ticket: int

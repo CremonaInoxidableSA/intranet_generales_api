@@ -18,7 +18,7 @@ security_scheme = HTTPBearer()
 @router.put(
     "/editar",
     dependencies=[
-        Depends(require_role("PERMISO_CREAR_TICKETS_RENDICIONES")),
+        Depends(require_role("PERMISO_EDITAR_TICKETS_RENDICIONES")),
         Depends(get_current_user)
     ]
 )
@@ -27,6 +27,20 @@ async def editar_ticket(
     current_user: AuthenticatedUser = Depends(get_current_user),
     credentials: HTTPAuthorizationCredentials = Depends(security_scheme),
 ):
+    if not all([
+        request.id_ticket,
+        request.nombre_imagen,
+        request.monto,
+        request.fecha_gasto,
+        request.id_medio_pago,
+        request.id_moneda,
+        request.id_concepto
+    ]):
+        return {
+            "success": False,
+            "detail": "Todos los campos deben estar completos"
+        }
+    
     result = await editar_ticket_service(
         id_ticket=request.id_ticket,
         nombre_imagen=request.nombre_imagen,

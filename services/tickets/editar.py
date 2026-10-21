@@ -125,11 +125,9 @@ async def editar_ticket_service(
                     "detail": "Nombre de archivo inválido."
                 }
             
-            # Extraer extensión antigua y aplicarla al nuevo nombre
             nombre_sin_ext, ext_antigua = os.path.splitext(ticket.nombre_imagen)
             nombre_nuevo_sin_ext, ext_nueva = os.path.splitext(nombre_imagen)
             
-            # Si el nuevo nombre no tiene extensión o tiene una diferente, usar la extensión antigua
             if not ext_nueva:
                 nombre_imagen = nombre_nuevo_sin_ext + ext_antigua
             else:

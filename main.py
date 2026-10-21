@@ -54,6 +54,7 @@ from routers.tickets.lista import router as tickets_lista_router
 from routers.tickets.imagen import router as tickets_imagen_router
 from routers.tickets.detalles import router as tickets_detalles_router
 from routers.tickets.editar import router as tickets_editar_router
+from routers.tickets.aprobar import router as tickets_aprobar_router
 
 load_dotenv()
     
@@ -77,27 +78,27 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(viajes_crear_router)
 app.include_router(viajes_lista_router)
 app.include_router(viajes_listaviajante_router)
 app.include_router(viajes_detalles_router)
-app.include_router(viajes_crear_router)
 app.include_router(viajes_habilitar_router)
 app.include_router(viajes_deshabilitar_router)
 app.include_router(viajes_editarviajantes_router)
 app.include_router(viajes_editarmoneda_router)
 
-app.include_router(monedas_lista_router)
 app.include_router(monedas_crear_router)
+app.include_router(monedas_lista_router)
 app.include_router(monedas_habilitar_router)
 app.include_router(monedas_deshabilitar_router)
 
-app.include_router(mediopago_lista_router)
 app.include_router(mediopago_crear_router)
+app.include_router(mediopago_lista_router)
 app.include_router(mediopago_habilitar_router)
 app.include_router(mediopago_deshabilitar_router)
 
-app.include_router(conceptos_lista_router)
 app.include_router(conceptos_crear_router)
+app.include_router(conceptos_lista_router)
 app.include_router(conceptos_habilitar_router)
 app.include_router(conceptos_deshabilitar_router)
 
@@ -105,12 +106,13 @@ app.include_router(comentarios_crear_router)
 app.include_router(comentarios_listaviaje_router)
 
 app.include_router(viaticos_crear_router)
+app.include_router(viaticos_listaviaje_router)
 app.include_router(viaticos_editar_router)
 app.include_router(viaticos_aprobar_router)
-app.include_router(viaticos_listaviaje_router)
 
 app.include_router(tickets_cargar_router)
 app.include_router(tickets_lista_router)
 app.include_router(tickets_imagen_router)
 app.include_router(tickets_detalles_router)
 app.include_router(tickets_editar_router)
+app.include_router(tickets_aprobar_router)

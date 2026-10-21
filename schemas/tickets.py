@@ -14,3 +14,6 @@ class EditarTicketRequest(BaseModel):
     id_medio_pago: int
     id_moneda: int
     id_concepto: int
+
+class AprobarTicketRequest(BaseModel):
+    id_ticket: int

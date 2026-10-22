@@ -53,11 +53,11 @@ async def obtener_detalles_ticket_service(id_ticket: int, id_usuario_jwt: str, p
         ticket_info = {
             "id_ticket": ticket.id_ticket,
             "nombre_imagen": ticket.nombre_imagen,
-            "fecha_gasto": ticket.fecha_gasto.date(),
-            "monto": ticket.monto,
-            "id_medio_pago": ticket.id_medio_pago,
-            "id_moneda": ticket.id_moneda,
-            "id_concepto": ticket.id_concepto,
+            "fecha_gasto": ticket.fecha_gasto.date() if ticket.fecha_gasto else None,
+            "monto": ticket.monto if ticket.monto else None,
+            "id_medio_pago": ticket.id_medio_pago if ticket.id_medio_pago else None,
+            "id_moneda": ticket.id_moneda if ticket.id_moneda else None,
+            "id_concepto": ticket.id_concepto if ticket.id_concepto else None,
             "estado": ticket.estado
         }
         

@@ -36,6 +36,11 @@ async def listar_tickets_service(id_viaje_usuario: int):
                 "tickets": []
             }
         
+        gastos_ars = 0
+        gastos_usd = 0
+        gastos_eur = 0
+        gastos_otr = 0
+        
         tickets_data = []
         for ticket in tickets:
             ticket_info = {
@@ -47,11 +52,24 @@ async def listar_tickets_service(id_viaje_usuario: int):
             }
             
             tickets_data.append(ticket_info)
+            
+            if ticket.id_moneda == 3:
+                gastos_ars = gastos_ars + (ticket.monto or 0)
+            elif ticket.id_moneda == 1:
+                gastos_usd = gastos_usd + (ticket.monto or 0)
+            elif ticket.id_moneda == 2:
+                gastos_eur = gastos_eur + (ticket.monto or 0)
+            else:
+                gastos_otr = gastos_otr + (ticket.monto or 0)
         
         return {
             "success": True,
             "detail": f"Se encontraron {len(tickets_data)} ticket(s).",
-            "tickets": tickets_data
+            "tickets": tickets_data,
+            "gastos_ars": gastos_ars,
+            "gastos_usd": gastos_usd,
+            "gastos_eur": gastos_eur,
+            "gastos_otr": gastos_otr
         }
     
     except Exception as e:

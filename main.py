@@ -57,6 +57,8 @@ from routers.tickets.editar import router as tickets_editar_router
 from routers.tickets.aprobar import router as tickets_aprobar_router
 from routers.tickets.eliminar import router as tickets_eliminar_router
 
+from routers.reporteexcel.reporte import router as reporteexcel_reporte_router
+
 load_dotenv()
     
 with create_engine(
@@ -118,3 +120,5 @@ app.include_router(tickets_detalles_router)
 app.include_router(tickets_editar_router)
 app.include_router(tickets_aprobar_router)
 app.include_router(tickets_eliminar_router)
+
+app.include_router(reporteexcel_reporte_router)
